@@ -10,8 +10,9 @@
  * sql
  *
 CREATE TABLE `users` (
-  `name` varchar(25) DEFAULT NULL,
-  `money` decimal(10,2) DEFAULT NULL
+  `name` varchar(25) NOT NULL,
+  `money` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 CREATE TABLE `transfer` (
