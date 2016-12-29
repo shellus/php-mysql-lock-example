@@ -28,6 +28,21 @@ if (@$_GET['reset']) {
     die();
 }
 
+if (@$_GET['info']) {
+
+    $s = $db -> query('SELECT * FROM `users`') -> fetchAll();
+    echo "<ul>";
+    foreach ($s as $item){
+        echo "<li>用户：{$item['name']}   资金：{$item['money']}</li>";
+    }
+    echo "</ul><br>";
+    $s = $db -> query('SELECT SUM(`money`) AS money FROM `users`') -> fetch();
+    echo "仓库共剩！{$s['money']}<br>";
+    die();
+}
+
+
+
 
 $from_user = array_splice($users, rand(0, count($users) - 1), 1)[0];
 $to_user = array_splice($users, rand(0, count($users) - 1), 1)[0];
@@ -81,16 +96,3 @@ try {
     die();
 }
 echo "转账成功！<br>";
-
-
-
-$s = $db -> query('SELECT * FROM `users`') -> fetchAll();
-
-echo "<ul>";
-foreach ($s as $item){
-    echo "<li>用户：{$item['name']}   资金：{$item['money']}</li>";
-}
-echo "</ul><br>";
-
-$s = $db -> query('SELECT SUM(`money`) AS money FROM `users`') -> fetch();
-echo "仓库共剩！{$s['money']}<br>";
