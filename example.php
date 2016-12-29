@@ -13,7 +13,7 @@ http://localhost/example.php?ts=0
 
  */
 
-
+define('BR', "<br>" . PHP_EOL);
 
 
 $db = new PDO('mysql:host=localhost;port=3306;dbname=test', "root", "root", [PDO::ERRMODE_EXCEPTION]);
@@ -24,20 +24,20 @@ $defaultMoney = 10000;
 if (@$_GET['reset']) {
     require 'generate.php';
     var_dump($users);
-    echo "表和数据重置完成<br>";
+    echo "表和数据重置完成" . BR;
     die();
 }
 
 if (@$_GET['info']) {
 
     $s = $db -> query('SELECT * FROM `users`') -> fetchAll();
-    echo "<ul>";
+    echo "<ul>" . BR;
     foreach ($s as $item){
-        echo "<li>用户：{$item['name']}   资金：{$item['money']}</li>";
+        echo "<li>用户：{$item['name']}   资金：{$item['money']}</li>" . BR;
     }
-    echo "</ul><br>";
+    echo "</ul>" . BR;
     $s = $db -> query('SELECT SUM(`money`) AS money FROM `users`') -> fetch();
-    echo "仓库共剩！{$s['money']}<br>";
+    echo "仓库共剩！{$s['money']}" . BR;
     die();
 }
 
@@ -48,7 +48,7 @@ $from_user = array_splice($users, rand(0, count($users) - 1), 1)[0];
 $to_user = array_splice($users, rand(0, count($users) - 1), 1)[0];
 $money = rand(0.01, 100);
 
-echo "$from_user 转账给 $to_user $money 元<br>";
+echo "$from_user 转账给 $to_user $money 元" . BR;
 
 try {
 
@@ -92,7 +92,7 @@ try {
     $q = $db->prepare('INSERT INTO `transfer`(`from_user`, `to_user`, `money`, `success`) VALUES (?,?,?,?)');
     $r = $q->execute([$from_user, $to_user, $money, 0]);
     header("HTTP/1.1 403 Forbidden");
-    echo $e->getMessage() . "<br>";
+    echo $e->getMessage() . BR;
     die();
 }
-echo "转账成功！<br>";
+echo "转账成功！" . BR;
